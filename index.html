@@ -1,0 +1,150 @@
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<div class="app">
+<header><h1>WPK · Fertigungs- und Endprüfprotokoll</h1><p>Testversion 0.4 · Nur erfundene Daten verwenden</p></header>
+<div class="panel">
+<h2>1 Auftrags- und Elementdaten</h2>
+<div class="fields">
+<label>Auftrag / Bauvorhaben<input id="bau" placeholder="Testbauvorhaben"></label>
+<label>Auftrags-Nr.<input id="nr" placeholder="TEST-123"></label>
+<label>Elementposition<input id="pos"></label>
+<label>Fertigungsdatum<input id="datum" type="date"></label>
+<label>Profilsystem / Farbe<input id="profil"></label>
+</div>
+<b>Elementart</b><div id="art" class="choices"></div>
+</div>
+<div class="panel"><h2>2 Maß- und Fertigungskontrolle</h2>
+<h3>Falzluft – Messwerte in mm</h3>
+<div class="fields">
+<label>Oben<input id="oben" inputmode="decimal" placeholder="mm"></label>
+<label>Rechts<input id="rechts" inputmode="decimal" placeholder="mm"></label>
+<label>Links<input id="links" inputmode="decimal" placeholder="mm"></label>
+<label>Unten<input id="unten" inputmode="decimal" placeholder="mm"></label>
+</div>
+<div id="mass"></div>
+<h3>Bodenabschluss / Bodendichtung</h3>
+<div id="bodenart" class="choices"></div><div id="boden"></div>
+</div>
+<div class="panel"><h2>3 Beschläge und Funktionskontrolle</h2>
+<div id="beschlag"></div><h3>Schlossausführung (Mehrfachauswahl)</h3>
+<div id="schlossart" class="choices"></div><div id="schloss"></div>
+<h3>Türschließer / Schließfolgeregelung</h3>
+<div id="schliesserart"></div><div id="schliesser"></div>
+<h3>Elektrische Komponenten / Kontakte</h3><div id="elektrik"></div>
+</div>
+<div class="panel"><h2>4 Typenschild und Kennzeichnung</h2>
+<div id="typ"></div>
+<label>Laufende Typenschild-Nr.<input id="typnr"></label>
+</div>
+<div class="panel"><h2>5 Abweichungen / Nacharbeiten / Freigabe</h2>
+<label>Feststellungen / Kommentare<textarea id="kommentar" rows="5"></textarea></label>
+<div id="nach"></div>
+<div class="fields"><label>Fertigung / Prüfung<input id="pruefer"></label>
+<label>Datum<input id="pruefdatum" type="date"></label>
+<label>Mitarbeiterkürzel<input id="kuerzel"></label></div>
+<h3>Unterschrift</h3>
+<canvas id="sig"></canvas>
+<p id="sigstatus" class="hint">Hier mit dem Finger unterschreiben.</p>
+<button type="button" id="clear" class="secondary">Unterschrift löschen</button>
+</div>
+<div class="panel actions">
+<button type="button" id="make">Berichtsvorschau erstellen</button>
+<button type="button" id="print">Drucken / als PDF sichern</button>
+<p class="hint">Im iPhone-Druckdialog über „Teilen“ als PDF sichern. Bei fehlenden Daten bleiben Felder leer.</p>
+</div>
+<div id="preview" hidden>
+<div class="sheet page1">
+<div class="sheethead"><h2>WPK | Fertigungs- und Endprüfprotokoll</h2><small>Aluminiumfenster, Türen, Rauchschutz- und Brandschutzelemente · je Element ein Prüfblatt</small></div>
+<h3>1 Auftrags- und Elementdaten</h3><table class="details"><tbody id="pdetails"></tbody></table>
+<h3>2 Maß- und Fertigungskontrolle</h3>
+<table class="checks"><thead><tr><th>Prüfpunkt</th><th>i. O.</th><th>n. i. O.</th><th>n. z.</th></tr></thead><tbody id="pmass"></tbody></table>
+<div class="measure" id="pmeasure"></div>
+<h4>Bodenabschluss / Bodendichtung</h4><div class="band" id="pbodenart"></div>
+<table class="checks"><thead><tr><th>Prüfpunkt</th><th>i. O.</th><th>n. i. O.</th><th>n. z.</th></tr></thead><tbody id="pboden"></tbody></table>
+<h3>3 Beschläge und Funktionskontrolle</h3>
+<table class="checks"><thead><tr><th>Prüfpunkt</th><th>i. O.</th><th>n. i. O.</th><th>n. z.</th></tr></thead><tbody id="pbeschlag"></tbody></table>
+<h4>Schlossausführung (Mehrfachauswahl möglich)</h4><div class="band" id="pschlossart"></div>
+<table class="checks"><thead><tr><th>Prüfpunkt</th><th>i. O.</th><th>n. i. O.</th><th>n. z.</th></tr></thead><tbody id="pschloss"></tbody></table>
+<div class="foot">Seite 1 / 2</div>
+</div>
+<div class="sheet page2">
+<div class="sheethead"><h2>WPK | Fertigungs- und Endprüfprotokoll</h2><small>Aluminiumfenster, Türen, Rauchschutz- und Brandschutzelemente · je Element ein Prüfblatt</small></div>
+<h3>3 Beschläge und Funktionskontrolle (Fortsetzung)</h3>
+<h4>Türschließer / Schließfolgeregelung</h4><table class="yesno"><tbody id="pschliesserart"></tbody></table>
+<table class="checks"><thead><tr><th>Prüfpunkt</th><th>i. O.</th><th>n. i. O.</th><th>n. z.</th></tr></thead><tbody id="pschliesser"></tbody></table>
+<h4>Elektrische Komponenten / Kontakte</h4>
+<table class="checks electric"><thead><tr><th>Bauteil</th><th>Vorhanden</th><th>i. O.</th><th>n. i. O.</th><th>Nicht gepr.</th></tr></thead><tbody id="pelektrik"></tbody></table>
+<h3>4 Typenschild und Kennzeichnung</h3><table class="yesno"><tbody id="ptyp"></tbody></table>
+<h3>5 Abweichungen / Nacharbeiten / Freigabe</h3>
+<table class="comment"><thead><tr><th>Feststellungen / Kommentare</th></tr></thead><tbody><tr><td id="pkommentar"></td></tr></tbody></table>
+<table class="yesno"><tbody id="pnach"></tbody></table>
+<p class="legal">Mit Unterschrift wird die Durchführung der dokumentierten Prüfungen bestätigt.<br>Abweichungen vor Freigabe klären; geltende System- und WPK-Vorgaben beachten.</p>
+<table class="details sign"><tbody id="psign"></tbody></table>
+<div class="foot">Seite 2 / 2</div>
+</div>
+</div>
+</div>
+<style>
+*{box-sizing:border-box}body{margin:0;background:#edf2f5;color:#253b48;font:15px Arial,sans-serif}.app{max-width:850px;margin:auto;padding:14px}header,.panel{background:white;border-radius:12px;padding:17px;margin-bottom:14px;box-shadow:0 2px 8px #20384a14}header{background:#173c53;color:white}header h1{font-size:21px;margin:0 0 6px}header p{margin:0;font-size:12px}h2{font-size:18px;margin:0 0 14px}h3{font-size:15px;margin:15px 0 9px}h4{font-size:13px;margin:12px 0 6px}label{display:block;font-size:13px;font-weight:600;margin:6px 0}input,textarea{display:block;width:100%;font:16px Arial;padding:10px;border:1px solid #b7c6ce;border-radius:6px;margin:5px 0 8px;background:#fff}textarea{resize:vertical}.fields{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:4px 12px}.choices{display:flex;flex-wrap:wrap;gap:8px 15px;margin:10px 0}.choices label{font-weight:normal;display:flex;align-items:center;gap:5px;margin:0}.choices input{width:auto;margin:0}.checkitem{padding:10px 0;border-bottom:1px solid #e4e9ed}.checkitem strong{display:block;font-size:13px;margin-bottom:8px}.segments{display:flex;gap:5px;flex-wrap:wrap}.segments label{margin:0;cursor:pointer;display:flex;align-items:center;gap:3px;border:1px solid #cbd7de;border-radius:7px;padding:8px;font-size:12px;font-weight:normal}.segments input{width:auto;margin:0}.segments label:has(input:checked){background:#dcebf2;border-color:#33647f}.hint{font-size:12px;color:#60727d}canvas{display:block;width:100%;height:165px;max-width:100%;border:2px solid #7893a3;border-radius:8px;background:#fff;touch-action:none}button{background:#1e5a7c;color:white;border:0;border-radius:8px;padding:13px;font-size:15px;font-weight:600;margin:5px 6px 5px 0;cursor:pointer}.secondary{background:#677f8c}.actions{display:flex;flex-wrap:wrap;gap:5px}.actions p{width:100%}
+#preview{margin-top:20px}.sheet{position:relative;width:210mm;min-height:297mm;background:#fff;margin:12px auto;padding:15mm 13mm 14mm;box-shadow:0 3px 12px #0002;color:#243d4d;font:10px Arial,sans-serif}.sheethead h2{font-size:18px;color:#243d4d;margin:0 0 5px}.sheethead small{font-size:9px;color:#333}.sheet h3{font-size:12px;margin:12px 0 6px;color:#263f4d}.sheet h4{font-size:10px;margin:8px 0 5px;color:#263f4d}.sheet table{width:100%;border-collapse:collapse;table-layout:fixed;color:#222}.sheet td,.sheet th{border:1px solid #b5c4cb;padding:5px 6px;vertical-align:middle;text-align:left}.sheet th{background:#e4edf0;font-weight:bold}.checks th:first-child{width:73%}.checks th:not(:first-child),.checks td:not(:first-child){width:9%;text-align:center}.electric th:first-child{width:52%}.electric th:not(:first-child),.electric td:not(:first-child){width:12%;text-align:center}.details td{width:50%}.yesno td:first-child{width:74%}.yesno td:last-child{text-align:center}.band{border:1px solid #b5c4cb;padding:7px 8px;display:flex;flex-wrap:wrap;gap:9px 20px;min-height:30px;color:#222}.measure{padding:6px 8px;border:1px solid #b5c4cb;border-top:0;display:flex;justify-content:space-between;gap:4px;font-size:9px;color:#222}.foot{position:absolute;bottom:9mm;right:13mm;color:#66737a;font-size:9px}.comment td{height:103px;vertical-align:top;white-space:pre-wrap;overflow-wrap:anywhere}.legal{font-size:9px;color:#333;line-height:1.4}.sign td{height:27px}.sign img{max-height:32px;max-width:180px;vertical-align:middle}.page2 .sheethead{margin-bottom:20px}
+@media(max-width:850px){.sheet{transform-origin:top left;zoom:0.45;margin:8px 0}.fields{grid-template-columns:1fr}}
+@page{size:A4;margin:0}
+@media print {
+  @page { size: A4 portrait; margin: 0; }
+  html, body { width: auto !important; height: auto !important; margin: 0 !important; padding: 0 !important; background: white !important; }
+  .app { width: 100% !important; max-width: none !important; padding: 0 !important; margin: 0 !important; }
+  header, .panel { display: none !important; }
+  #preview { display: block !important; margin: 0 !important; padding: 0 !important; }
+  .sheet { display: block !important; position: relative !important; width: 210mm !important; height: 275mm !important; min-height: 0 !important; max-height: 275mm !important; margin: 0 !important; padding: 12mm 12mm 10mm !important; box-shadow: none !important; transform: none !important; zoom: 1 !important; overflow: hidden !important; break-before: auto !important; page-break-before: auto !important; break-after: auto !important; page-break-after: auto !important; break-inside: avoid !important; page-break-inside: avoid !important; }
+  .sheet.page1 { break-after: page !important; page-break-after: always !important; }
+  .sheet.page2 { break-before: auto !important; page-break-before: auto !important; break-after: auto !important; page-break-after: auto !important; }
+  .foot { bottom: 7mm !important; right: 12mm !important; }
+}
+</style>
+<script>
+(function(){
+const $=id=>document.getElementById(id), val=id=>$(id).value.trim(),esc=s=>String(s??'').replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
+const sections={
+mass:['Flügelmaße / Falzluft','Eck- und T-Verbindungen / Verklebung','Dichtungen vollständig / Ecken verklebt','Oberflächen ohne Beschädigung'],
+boden:['Bodenabschluss gemäß Vorgabe montiert','Absenkbare Bodendichtung eingestellt und geprüft'],
+beschlag:['Beschläge gemäß Fertigungsunterlagen','Schließbleche / Verriegelungspunkte','Bänder / Einstellungen'],
+schloss:['Schloss- / Verriegelungsfunktion geprüft','Panikfunktion geprüft, falls vorhanden'],
+schliesser:['Türschließer eingestellt und geprüft','Schließfolgeregelung eingestellt und geprüft'],
+elektrik:['Magnetkontakt','Riegelschaltkontakt','E-Öffner','Motorische Verriegelung'],
+schliesserart:['Türschließer vorhanden','Schließfolgeregelung vorhanden'],
+typ:['Typenschild erforderlich','Typenschild angebracht','Kennzeichnung korrekt / lesbar'],
+nach:['Nachprüfung erforderlich']
+};
+const choiceSets={art:['Fenster','Tür','Rauchschutz','Brandschutz'],bodenart:['Bodenschwelle','Absenkbare Bodendichtung','Ohne Schwelle'],schlossart:['Einfachverriegelung','Mehrfachverriegelung','Selbstverriegelnd','Motorisch','Panikfunktion E','Panikfunktion B']};
+for(const [key,items] of Object.entries(choiceSets))$(key).innerHTML=items.map((x,i)=>`<label><input type="checkbox" id="${key}_${i}">${esc(x)}</label>`).join('');
+const opts=['i. O.','n. i. O.','n. z.'];
+for(const [key,items] of Object.entries(sections))$(key).innerHTML=items.map((x,i)=>`<div class="checkitem"><strong>${esc(x)}</strong><div class="segments">${(key==='elektrik'?['Vorhanden','i. O.','n. i. O.','Nicht gepr.']:key==='schliesserart'||key==='typ'||key==='nach'?['Ja','Nein']:opts).map((o,j)=>`<label><input type="${key==='elektrik'&&j===0?'checkbox':'radio'}" name="${key}_${i}${key==='elektrik'&&j===0?'_present':''}" value="${esc(o)}">${esc(o)}</label>`).join('')}</div></div>`).join('');
+const marked=(name,value)=>{let el=document.querySelector(`input[name="${name}"][value="${value}"]`);return el&&el.checked?'☒':'☐'};
+const checks=key=>sections[key].map((x,i)=>`<tr><td>${esc(x)}</td>${opts.map(o=>`<td>${marked(key+'_'+i,o)}</td>`).join('')}</tr>`).join('');
+const yn=key=>sections[key].map((x,i)=>`<tr><td>${esc(x)}</td><td>${marked(key+'_'+i,'Ja')} Ja &nbsp;&nbsp;&nbsp; ${marked(key+'_'+i,'Nein')} Nein</td></tr>`).join('');
+const choice=key=>choiceSets[key].map((x,i)=>`${$(key+'_'+i).checked?'☒':'☐'} ${esc(x)}`).join(' &nbsp;&nbsp; ');
+const c=$('sig'),ctx=c.getContext('2d');let drawing=false,hasSig=false;
+function size(){let r=c.getBoundingClientRect(),d=window.devicePixelRatio||1;c.width=Math.round(r.width*d);c.height=Math.round(r.height*d);ctx.setTransform(d,0,0,d,0,0);ctx.strokeStyle='#1d3443';ctx.lineWidth=2.4;ctx.lineCap='round';ctx.lineJoin='round'}
+size();
+window.addEventListener('resize',()=>{if(!hasSig)size()});
+function point(e){let r=c.getBoundingClientRect();let sx=(c.width/(window.devicePixelRatio||1))/r.width,sy=(c.height/(window.devicePixelRatio||1))/r.height;return{x:(e.clientX-r.left)*sx,y:(e.clientY-r.top)*sy}}
+c.addEventListener('pointerdown',e=>{e.preventDefault();c.setPointerCapture(e.pointerId);let p=point(e);ctx.beginPath();ctx.moveTo(p.x,p.y);drawing=true});
+c.addEventListener('pointermove',e=>{if(!drawing)return;e.preventDefault();let p=point(e);ctx.lineTo(p.x,p.y);ctx.stroke();hasSig=true;$('sigstatus').textContent='Unterschrift erkannt ✓'});
+['pointerup','pointercancel'].forEach(x=>c.addEventListener(x,()=>drawing=false));
+$('clear').onclick=()=>{ctx.clearRect(0,0,c.width,c.height);hasSig=false;$('sigstatus').textContent='Hier mit dem Finger unterschreiben.'};
+function make(){
+$('pdetails').innerHTML=`<tr><td>Auftrag / Bauvorhaben: ${esc(val('bau'))}</td><td>Auftrags-Nr.: ${esc(val('nr'))}</td></tr><tr><td>Elementposition: ${esc(val('pos'))}</td><td>Fertigungsdatum: ${esc(val('datum'))}</td></tr><tr><td colspan="2">Profilsystem / Farbe: ${esc(val('profil'))}</td></tr><tr><td colspan="2"><b>Elementart:</b> ${choice('art')}</td></tr>`;
+for(const key of ['mass','boden','beschlag','schloss','schliesser'])$('p'+key).innerHTML=checks(key);
+$('pmeasure').innerHTML=['oben','rechts','links','unten'].map(k=>`<span><b>${k[0].toUpperCase()+k.slice(1)}:</b> ${esc(val(k))||'—'} mm</span>`).join('');
+for(const key of ['bodenart','schlossart'])$('p'+key).innerHTML=choice(key);
+for(const key of ['schliesserart','nach'])$('p'+key).innerHTML=yn(key);
+$('pelektrik').innerHTML=sections.elektrik.map((x,i)=>`<tr><td>${esc(x)}</td><td>${document.querySelector(`input[name="elektrik_${i}_present"]`).checked?'☒':'☐'}</td>${['i. O.','n. i. O.','Nicht gepr.'].map(o=>`<td>${marked('elektrik_'+i,o)}</td>`).join('')}</tr>`).join('');
+$('ptyp').innerHTML=yn('typ')+`<tr><td colspan="2">Laufende Typenschild-Nr.: ${esc(val('typnr'))}</td></tr>`;
+$('pkommentar').textContent=val('kommentar');
+$('psign').innerHTML=`<tr><td>Fertigung / Prüfung: ${esc(val('pruefer'))}</td><td>Datum: ${esc(val('pruefdatum'))}</td></tr><tr><td colspan="2">Unterschrift: ${hasSig?`<img src="${c.toDataURL('image/png')}" alt="Unterschrift">`:'—'}</td></tr><tr><td colspan="2">Mitarbeiterkürzel: ${esc(val('kuerzel'))}</td></tr>`;
+$('preview').hidden=false;
+}
+$('make').onclick=()=>{make();$('preview').scrollIntoView({behavior:'smooth'})};
+$('print').onclick=()=>{make();window.print()};
+})();
+</script>
